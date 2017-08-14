@@ -28,5 +28,7 @@ $>java -jar demo*.jar -f ${inputFilePath}.txt -f ${formet(xml/json)} -o ${outPut
 
 
 ### sreenshot
-![Alt text](./src/main/resoures/screen.png?raw=true "How to run appliation")
+[
+![demo](https://user-images.githubusercontent.com/9928529/29271610-9a236b66-80fc-11e7-8174-609db21cef0b.png)
+](url)
 
