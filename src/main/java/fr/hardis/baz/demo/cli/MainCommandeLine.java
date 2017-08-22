@@ -52,7 +52,7 @@ public class MainCommandeLine implements CommandLineRunner {
         final Option formatOption = Option.builder("f")
                 .argName("format")
                 .hasArg()
-                .desc("Output format ML/JSON")
+                .desc("Output format XML/JSON")
                 .build();
         
         final Option fileOutOption = Option.builder("o")

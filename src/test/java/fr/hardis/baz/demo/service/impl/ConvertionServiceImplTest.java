@@ -32,10 +32,11 @@ public class ConvertionServiceImplTest {
 	
 	@Test
 	public void convertToXml() throws Exception {
+		final Date currentDate = new Date(); 
 		JobParameters param = new JobParametersBuilder()
-                .addDate("date", new Date())
+                .addDate("date",currentDate)
                 .addString("filePath", "src/main/resources/data/import.txt")
-                .addString("outFilePath", "src/main/resources/data/import.xml")
+                .addString("outFilePath", "src/main/resources/data/import-" + currentDate.getTime() + ".xml")
                 .addString("format", "xml")
                 .toJobParameters();
 		BatchStatus batchStatus = jobLauncherTestUtils.launchJob(param).getStatus();
@@ -44,10 +45,11 @@ public class ConvertionServiceImplTest {
 	
 	@Test
 	public void convertToJson() throws Exception {
+		final Date currentDate = new Date(); 
 		JobParameters param = new JobParametersBuilder()
-                .addDate("date", new Date())
+                .addDate("date", currentDate)
                 .addString("filePath", "src/main/resources/data/import.txt")
-                .addString("outFilePath", "src/main/resources/data/import.json")
+                .addString("outFilePath", "src/main/resources/data/import" + currentDate.getTime() + ".json")
                 .addString("format", "json")
                 .toJobParameters();
 		BatchStatus batchStatus = jobLauncherTestUtils.launchJob(param).getStatus();

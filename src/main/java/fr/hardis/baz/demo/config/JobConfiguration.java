@@ -34,6 +34,8 @@ import fr.hardis.baz.demo.dto.Reference;
 public class JobConfiguration {
 	
 	private static final Logger log = LoggerFactory.getLogger(JobConfiguration.class);
+	
+	private static final String READER_SEPERATOR = ";";
 
     @Autowired
     private JobBuilderFactory jobs;
@@ -58,7 +60,7 @@ public class JobConfiguration {
     @Bean
     public Step step(){
         return stepBuilderFactory.get("step")
-                .<Reference,Reference>chunk(10)
+                .<Reference,Reference>chunk(1000)
                 .reader(reader(null))
                 .writer(writer(null, null, null))
                 .build();
@@ -87,8 +89,8 @@ public class JobConfiguration {
     @Bean
     @StepScope
     public FlatFileItemReader<Reference> reader(@Value("#{jobParameters[filePath]}") String filePath){
-        log.debug("directoryPath = {}", filePath);
-        FlatFileItemReader<Reference> reader = new FlatFileItemReader<Reference>();
+        log.debug("filePath = {}", filePath);
+        FlatFileItemReader<Reference> reader = new FlatFileItemReader<>();
         //reader.setLinesToSkip(1);//first line is title definition
         reader.setResource(getFileFromDirectory(filePath));
         reader.setLineMapper(lineMapper());
@@ -102,13 +104,13 @@ public class JobConfiguration {
 
     @Bean
     public LineMapper<Reference> lineMapper() {
-        DefaultLineMapper<Reference> lineMapper = new DefaultLineMapper<Reference>();
+        DefaultLineMapper<Reference> lineMapper = new DefaultLineMapper<>();
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-        lineTokenizer.setDelimiter(";");
+        lineTokenizer.setDelimiter(READER_SEPERATOR);
         lineTokenizer.setStrict(false);
 
-        BeanWrapperFieldSetMapper<Reference> fieldSetMapper = new BeanWrapperFieldSetMapper<Reference>();
+        BeanWrapperFieldSetMapper<Reference> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         fieldSetMapper.setTargetType(Reference.class);
 
         lineMapper.setLineTokenizer(lineTokenizer);
